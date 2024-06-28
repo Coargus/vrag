@@ -1,0 +1,6 @@
+Parameters = {n_rank:${n_rank}}
+
+Retrieval results from users' prompts are as follows:
+
+${retrieval_results}
+
