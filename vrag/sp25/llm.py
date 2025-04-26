@@ -1,7 +1,6 @@
 # Ensure your VertexAI credentials are configured
 import os
 
-import numpy as np
 import vertexai
 from google.cloud import aiplatform
 from google.oauth2 import service_account
@@ -27,9 +26,10 @@ def init_embeddings(keyfile_path: str):
     )
 
 
-keyfile_path = "/home/mc76728/repo/Coargus/vrag/cs391-project-11f0f788cfea.json"
-llm = init_llm(keyfile_path)
-embeddings = init_embeddings(keyfile_path)
+# Uncoomnet below for testing
+# keyfile_path = "/home/mc76728/repo/Coargus/vrag/cs391-project-11f0f788cfea.json"
+# llm = init_llm(keyfile_path)
+# embeddings = init_embeddings(keyfile_path)
 
-print(llm.invoke("Hello, world!").content)
-print(np.mean(embeddings.embed_query("Hello, world!"), axis=0))
+# print(llm.invoke("Hello, world!").content)
+# print(np.mean(embeddings.embed_query("Hello, world!"), axis=0))
