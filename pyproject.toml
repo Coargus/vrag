@@ -26,7 +26,18 @@ dependencies = [
     "langchain",
     "langchain-upstage",
     "langchain_chroma",
-    "requests"
+    "langchain[google-vertexai]",
+    "langchain-openai",
+    "langchain-chroma",
+    "requests",
+    "langchain-text-splitters",
+    "langchain-community",
+    "langgraph",
+    "google_cloud_aiplatform",
+    "typing-extensions",
+    "qdrant-client",
+    "openai",
+    "langchain-community",
 ]
 
 [project.urls]
