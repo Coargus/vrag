@@ -1,14 +1,16 @@
 import ast
+import os
 import pickle
 import re
 from string import Template
 
-from vrag.sp25.llm import init_llm
+from vrag.sp25.llm import init_gemini_llm, init_openai_llm
 from vrag.sp25.util_text_processing import (
     read_course_transcripts,
     text_splitter,
 )
 
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 KEYFILE_PATH = "/home/mc76728/repo/Coargus/vrag/artifacts/sp25/cs391-project-11f0f788cfea.json"
 COURSE_TRANSCRIPT_PATH = (
     "/home/mc76728/repo/Coargus/vrag/artifacts/sp25/merged_transcript.txt"
@@ -20,7 +22,13 @@ You're a Teaching Assistant for a course, provided with a segment of a professor
 
 
 def main():
-    llm = init_llm(KEYFILE_PATH)
+    modellist = ["gemini", "gpt-4o-mini"]
+    for model in modellist:
+        if model == "gemini":
+            llm = init_gemini_llm(KEYFILE_PATH)
+        else:
+            llm = init_openai_llm(api_key=OPENAI_API_KEY)
+
     docs = read_course_transcripts(COURSE_TRANSCRIPT_PATH)
     chunks = text_splitter(docs, chunk_size=10000, chunk_overlap=2000)
 

@@ -8,7 +8,7 @@ from langchain.chat_models import init_chat_model
 from langchain_google_vertexai import VertexAIEmbeddings
 
 
-def init_llm(keyfile_path: str):
+def init_gemini_llm(keyfile_path: str):
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keyfile_path
     aiplatform.init(project="cs391-project")
     vertexai.init(project="cs391-project")
@@ -26,6 +26,17 @@ def init_embeddings(keyfile_path: str):
     )
 
 
+# --- OpenAI Functions ---
+
+
+def init_openai_llm(api_key: str, model_name: str = "gpt-4o-mini"):
+    """Initializes the OpenAI LLM."""
+    os.environ["OPENAI_API_KEY"] = api_key
+    # Example uses gpt-4o-mini, adjust model name as needed
+    # gpt-4o-mini, o1-mini, o1-preview
+    return init_chat_model(model_name, model_provider="openai")
+
+
 # Uncoomnet below for testing
 # keyfile_path = "/home/mc76728/repo/Coargus/vrag/cs391-project-11f0f788cfea.json"
 # llm = init_llm(keyfile_path)
@@ -33,3 +44,10 @@ def init_embeddings(keyfile_path: str):
 
 # print(llm.invoke("Hello, world!").content)
 # print(np.mean(embeddings.embed_query("Hello, world!"), axis=0))
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# # --- OpenAI Functions ---
+# llm = init_openai_llm(
+#     model_name="o1-preview",
+#     api_key=OPENAI_API_KEY,
+# )
+# print(llm.invoke("Hello, world!").content)
