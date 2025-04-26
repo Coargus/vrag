@@ -19,7 +19,7 @@ def chat_completions(api_key, base_url, model, messages):
 
 
 client = OpenAI(
-    api_key="up_Qt0FNm0YXZyHIXkUmfnVu6kEhFNWs",
+    api_key="",
     base_url="https://api.upstage.ai/v1/solar",
 )
 
