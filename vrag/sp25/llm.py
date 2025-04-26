@@ -1,6 +1,7 @@
 # Ensure your VertexAI credentials are configured
 import os
 
+import numpy as np
 import vertexai
 from google.cloud import aiplatform
 from google.oauth2 import service_account
@@ -31,5 +32,4 @@ llm = init_llm(keyfile_path)
 embeddings = init_embeddings(keyfile_path)
 
 print(llm.invoke("Hello, world!").content)
-
-debug = 9
+print(np.mean(embeddings.embed_query("Hello, world!"), axis=0))
