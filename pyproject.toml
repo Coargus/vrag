@@ -38,6 +38,7 @@ dependencies = [
     "qdrant-client",
     "openai",
     "langchain-community",
+    "beautifulsoup4"
 ]
 
 [project.urls]
