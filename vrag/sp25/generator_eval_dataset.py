@@ -1,16 +1,16 @@
-import ast
 import os
 import pickle
-import re
 from string import Template
 
 from vrag.sp25.llm import init_gemini_llm, init_openai_llm
 from vrag.sp25.util_text_processing import (
+    extract_dict_from_text,
     read_course_transcripts,
     text_splitter,
 )
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = "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"
 KEYFILE_PATH = "/home/mc76728/repo/Coargus/vrag/artifacts/sp25/cs391-project-11f0f788cfea.json"
 COURSE_TRANSCRIPT_PATH = (
     "/home/mc76728/repo/Coargus/vrag/artifacts/sp25/merged_transcript.txt"
@@ -40,39 +40,15 @@ def main():
         formatted_prompt = prompt_template.substitute(text=chunk.page_content)
 
         llm_response = llm.invoke(formatted_prompt)
-        extracted_string = None
 
-        try:
-            raw_content = llm_response.content
-            match = re.search(
-                r"```(?:json)?\s*(.*?)\s*```", raw_content, re.DOTALL
-            )
+        q_and_a_dict = extract_dict_from_text(llm_response.content)
 
-            if match:
-                extracted_string = match.group(1).strip()
-            else:
-                extracted_string = raw_content.strip()
-
-            if extracted_string.startswith("{{") and extracted_string.endswith(
-                "}}"
-            ):
-                extracted_string = extracted_string[1:-1]
-            elif extracted_string.startswith("{") and extracted_string.endswith(
-                "}"
-            ):
-                pass
-
-            q_and_a_dict = ast.literal_eval(extracted_string)
-
-            if (
-                isinstance(q_and_a_dict, dict)
-                and "question" in q_and_a_dict
-                and "answer" in q_and_a_dict
-            ):
-                results.append(q_and_a_dict)
-
-        except (ValueError, SyntaxError, AttributeError):
-            continue
+        if (
+            isinstance(q_and_a_dict, dict)
+            and "question" in q_and_a_dict
+            and "answer" in q_and_a_dict
+        ):
+            results.append(q_and_a_dict)
 
     # Define the pickle file path
     pickle_file_path = "generator_eval_dataset.pkl"
