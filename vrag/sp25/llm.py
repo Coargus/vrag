@@ -1,0 +1,35 @@
+# Ensure your VertexAI credentials are configured
+import os
+
+import vertexai
+from google.cloud import aiplatform
+from google.oauth2 import service_account
+from langchain.chat_models import init_chat_model
+from langchain_google_vertexai import VertexAIEmbeddings
+
+
+def init_llm(keyfile_path: str):
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keyfile_path
+    aiplatform.init(project="cs391-project")
+    vertexai.init(project="cs391-project")
+    return init_chat_model(
+        "gemini-2.0-flash-001", model_provider="google_vertexai"
+    )
+
+
+def init_embeddings(keyfile_path: str):
+    credentials = service_account.Credentials.from_service_account_file(
+        keyfile_path
+    )
+    return VertexAIEmbeddings(
+        model="text-embedding-004", credentials=credentials
+    )
+
+
+keyfile_path = "/home/mc76728/repo/Coargus/vrag/cs391-project-11f0f788cfea.json"
+llm = init_llm(keyfile_path)
+embeddings = init_embeddings(keyfile_path)
+
+print(llm.invoke("Hello, world!").content)
+
+debug = 9
