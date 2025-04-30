@@ -46,8 +46,8 @@ def init_openai_llm(api_key: str, model_name: str = "gpt-4o-mini"):
 # print(np.mean(embeddings.embed_query("Hello, world!"), axis=0))
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # # --- OpenAI Functions ---
-# llm = init_openai_llm(
-#     model_name="o1-preview",
-#     api_key=OPENAI_API_KEY,
-# )
-# print(llm.invoke("Hello, world!").content)
+llm = init_openai_llm(
+    model_name="o1-preview",
+    api_key="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",
+)
+print(llm.invoke("Hello, world!").content)

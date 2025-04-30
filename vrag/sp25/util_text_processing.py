@@ -18,7 +18,7 @@ def text_splitter(docs: list, chunk_size: int = 1000, chunk_overlap: int = 200):
 
 
 def extract_dict_from_text(text: str):
-    match = re.search(r"```(?:json)?\s*(.*?)\s*```", text, re.DOTALL)
+    match = re.search(r"```(?:json|python)?\s*(.*?)\s*```", text, re.DOTALL)
 
     if match:
         extracted_string = match.group(1).strip()
